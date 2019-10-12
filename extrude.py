@@ -43,6 +43,18 @@ o.data.materials.clear()
 
 # Create material
 mat = bpy.data.materials.new(name="Material")
+
+tex = bpy.data.textures.new("SomeName", 'IMAGE')
+img = bpy.data.images.load(filepath="cheetah.jpg")
+
+tex.image = img
+# tex.texture_coords = 'WINDOW'
+
+slot = mat.texture_slots.add()
+slot.texture = tex
+slot.texture_coords = 'OBJECT'
+
+
 # Apply material
 o.data.materials.append(mat)
 # Change material color
@@ -51,4 +63,16 @@ color_map={
     "green":(0, 1, 0),
     "blue":(0, 0, 1)
 }
-o.active_material.diffuse_color = (color_map[argv[1]])
+# o.active_material.diffuse_color = (color_map[argv[1]])
+
+
+bpy.ops.object.text_add(location=(0,0,1), rotation=(math.radians(90),0,0))
+bpy.ops.object.editmode_toggle()
+bpy.ops.font.delete()
+bpy.ops.font.text_insert(text='heyoo')
+bpy.ops.object.editmode_toggle()
+
+
+area = next(area for area in bpy.context.screen.areas if area.type == 'VIEW_3D')
+space = next(space for space in area.spaces if space.type == 'VIEW_3D')
+space.viewport_shade = 'RENDERED'  # set the viewport shading
