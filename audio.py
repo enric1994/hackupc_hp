@@ -119,3 +119,19 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#potrace -s out.ppm
+#convert test.png out.ppm 
+#ffmpeg -i audio.ogg out.wav
+
+#start telegram and listen
+#save OGG
+#transform to wav
+#return translation to telegram
+#crawl shape and texture
+#select best shape and texture
+#transform shape PNG to PPM
+#transform  PPM to SVG
+# blender!
+
+
