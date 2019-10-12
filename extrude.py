@@ -37,3 +37,18 @@ bpy.context.object.modifiers["Solidify"].offset = 0.1
 bpy.context.active_object.rotation_mode = 'XYZ'
 bpy.context.active_object.rotation_euler = (math.radians(90), 0, 0)
 bpy.context.scene.objects.active.scale = (30, 30, 30)
+
+# Remove materials
+o.data.materials.clear()
+
+# Create material
+mat = bpy.data.materials.new(name="Material")
+# Apply material
+o.data.materials.append(mat)
+# Change material color
+color_map={
+    "red":(1, 0, 0),
+    "green":(0, 1, 0),
+    "blue":(0, 0, 1)
+}
+o.active_material.diffuse_color = (color_map[argv[1]])

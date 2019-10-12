@@ -1,3 +1,3 @@
 # hackupc_hp
 
-blender --python extrude.py -- dino.svg
+blender --python extrude.py -- dino.svg blue
