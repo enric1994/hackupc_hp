@@ -34,6 +34,7 @@ if mball:
 bpy.context.scene.objects.active = o
 bpy.ops.object.modifier_add(type='SOLIDIFY')
 bpy.context.object.modifiers["Solidify"].offset = 0.1
+bpy.context.object.modifiers["Solidify"].thickness = 0.05
 bpy.context.active_object.rotation_mode = 'XYZ'
 bpy.context.active_object.rotation_euler = (math.radians(90), 0, 0)
 bpy.context.scene.objects.active.scale = (30, 30, 30)
@@ -45,7 +46,7 @@ o.data.materials.clear()
 mat = bpy.data.materials.new(name="Material")
 
 tex = bpy.data.textures.new("SomeName", 'IMAGE')
-img = bpy.data.images.load(filepath="cheetah.jpg")
+img = bpy.data.images.load(filepath=argv[1])
 
 tex.image = img
 # tex.texture_coords = 'WINDOW'
@@ -69,7 +70,7 @@ color_map={
 bpy.ops.object.text_add(location=(0,0,1), rotation=(math.radians(90),0,0))
 bpy.ops.object.editmode_toggle()
 bpy.ops.font.delete()
-bpy.ops.font.text_insert(text='heyoo')
+bpy.ops.font.text_insert(text='Thanks for this amazing weekend')
 bpy.ops.object.editmode_toggle()
 
 

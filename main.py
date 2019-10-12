@@ -9,6 +9,8 @@ from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler)
 
+from transcript import transcript as transcript
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -37,8 +39,37 @@ def audio(update, context):
     filename = name
     print('Saving audio as "{}"...'.format(filename))
     audio_file.download(filename)
-    update.message.reply_text('Generating 3D...')
 
+    transcription = transcript()
+    
+    update.message.reply_text('Generating 3D for: ' + transcription)
+    shape = transcription.split()[-1]
+    texture = transcription.split()[-2]
+
+    #clean folder
+    os.system('rm shape/*')
+    os.system('rm texture/*')
+
+    update.message.reply_text('Searching images for shape: ' + shape)
+    os.system('python3 crawl.py --query "{} svg" --output shape'.format(shape))
+    shape_image = 'shape/' + sorted(os.listdir('shape'), key=lambda filename: os.path.getsize(os.path.join('shape', filename)))[:2][0]
+    update.message.reply_photo(photo=open(shape_image, 'rb'),
+                            caption="Shape image")
+
+
+    update.message.reply_text('Searching images for texture: ' + texture)
+    os.system('python3 crawl.py --query "{} texture" --output texture'.format(texture))
+    texture_image = 'texture/' + sorted(os.listdir('texture'), key=lambda filename: os.path.getsize(os.path.join('texture', filename)))[:1][0]
+    update.message.reply_photo(photo=open(texture_image, 'rb'),
+                                caption="Texture image")
+
+    update.message.reply_text('Generating SVG and textures...')
+    os.system('convert {} shape.ppm'.format(shape_image))
+    os.system('potrace -s shape.ppm')
+
+    os.system('blender --python extrude.py -- shape.svg {}'.format(texture_image))
+
+    ConversationHandler.END
     return DONE
 
 
@@ -122,14 +153,8 @@ if __name__ == '__main__':
 
 #potrace -s out.ppm
 #convert test.png out.ppm 
-#ffmpeg -i audio.ogg out.wav
 
-#start telegram and listen
-#save OGG
-#transform to wav
-#return translation to telegram
-#crawl shape and texture
-#select best shape and texture
+
 #transform shape PNG to PPM
 #transform  PPM to SVG
 # blender!

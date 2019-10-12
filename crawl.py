@@ -29,8 +29,8 @@ args = vars(ap.parse_args())
 # maximum number of results for a given search and (2) the group size
 # for results (maximum of 50 per request)
 API_KEY = "9880388a233740878c2ba55e6b6c393b"
-MAX_RESULTS = 250
-GROUP_SIZE = 50
+MAX_RESULTS = 10
+GROUP_SIZE = 5
 
 
 # store the search term in a convenience variable then set the
@@ -73,7 +73,7 @@ for offset in range(0, estNumResults, GROUP_SIZE):
 		try:
 			# make a request to download the image
 			print("[INFO] fetching: {}".format(v["contentUrl"]))
-			r = requests.get(v["contentUrl"], timeout=30)
+			r = requests.get(v["contentUrl"], timeout=3)
 
 			# build the path to the output image
 			ext = v["contentUrl"][v["contentUrl"].rfind("."):]
