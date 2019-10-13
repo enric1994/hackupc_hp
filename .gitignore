@@ -1,7 +1,6 @@
 secret.py
 audio.ogg
 *.pyc
-*.png
 *.jpg
 *.svg
 *.ppm
