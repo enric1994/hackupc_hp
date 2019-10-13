@@ -1,3 +1,4 @@
 # hackupc_hp
 
-blender --python extrude.py -- dino.svg blue
+<img src="demo.png">
+<img src="hp_pipeline.png">

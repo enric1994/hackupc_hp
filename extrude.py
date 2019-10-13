@@ -58,14 +58,6 @@ slot.texture_coords = 'OBJECT'
 
 # Apply material
 o.data.materials.append(mat)
-# Change material color
-color_map={
-    "red":(1, 0, 0),
-    "green":(0, 1, 0),
-    "blue":(0, 0, 1)
-}
-# o.active_material.diffuse_color = (color_map[argv[1]])
-
 
 bpy.ops.object.text_add(location=(0,0,1), rotation=(math.radians(90),0,0))
 bpy.ops.object.editmode_toggle()
